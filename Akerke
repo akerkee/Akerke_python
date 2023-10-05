@@ -1,0 +1,24 @@
+from skimage import io, color, feature
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+
+# Загрузка и предобработка изображений
+images = load_images_data()  # предположим, что у вас есть функция для загрузки изображений
+X = preprocess_images(images)  # предположим, что у вас есть функция для предобработки изображений
+y = load_labels()
+
+# Разделение данных на обучающий и тестовый наборы
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Создание и обучение модели k-NN
+k = 3  # число соседей
+knn_classifier = KNeighborsClassifier(n_neighbors=k)
+knn_classifier.fit(X_train, y_train)
+
+# Предсказание классов для тестового набора
+y_pred = knn_classifier.predict(X_test)
+
+# Оценка точности модели
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Точность: {accuracy:.2f}')
